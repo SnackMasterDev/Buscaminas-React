@@ -1,4 +1,4 @@
-function createBoard(level){
+export function createBoard(level){
     let board = [];
     let rows = 0;
     let cols = 0;
@@ -28,6 +28,24 @@ function createBoard(level){
             row.push(cell);
         }
         board.push(row);
+    }
+
+    board = placeMines(board, Math.floor(rows * cols * 0.2));
+    return board;
+}
+
+function placeMines(board, numMines){
+    let rows = board.length;
+    let cols = board[0].length;
+    let minesPlaced = 0;
+
+    while(minesPlaced < numMines){
+        let randomRow = Math.floor(Math.random() * rows);
+        let randomCol = Math.floor(Math.random() * cols);
+        if(!board[randomRow][randomCol].isMine){
+            board[randomRow][randomCol].isMine = true;
+            minesPlaced++;
+        }
     }
     return board;
 }
